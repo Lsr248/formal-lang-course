@@ -1,9 +1,8 @@
 from typing import Set, Union
 
-from networkx import MultiDiGraph, Graph
+from networkx import MultiDiGraph, Graph, nx_pydot
 from pyformlang.cfg import CFG, Variable
 from project.cnfUtils import cfg_to_cnf
-
 
 
 def reachability_problem(
@@ -13,6 +12,22 @@ def reachability_problem(
     final_nodes: set = None,
     start_var: Variable = "S",
 ) -> set:
+    """Performs a context-free path querying in a graph by a context-free grammar.
+
+    Parameters
+    ----------
+    graph: Graph
+    query: CFG
+    start_nodes: Set|None
+    final_nodes: Set|None
+    start_var: Variable |"S"
+
+    Returns
+    -------
+    result: Set
+        A set of pairs of nodes solving the reachability problem and corresponding to the
+        conditions (starting and final nodes, starting symbol).
+    """
     if start_nodes is None:
         start_nodes = graph.nodes
     if final_nodes is None:
@@ -29,7 +44,21 @@ def reachability_problem(
     }
 
 
-def hellings(graph: Graph, cfg: CFG) -> set:
+def hellings(graph: Graph, cfg: CFG) -> list:
+    """Function based on the Hellings algorithm that solves the reachability problem between all pairs of nodes
+     for a given graph and a given context-free grammar.
+
+    Parameters
+    ----------
+    graph: Graph
+    cfg: CFG
+
+    Returns
+    -------
+    result: List
+        A list of pairs of nodes solving the reachability problem between all pairs of nodes.
+    """
+
     cfg = cfg_to_cnf(cfg)
     term_productions, non_term_productions, eps_productions = set(), set(), set()
     for prod in cfg.productions:
@@ -40,7 +69,7 @@ def hellings(graph: Graph, cfg: CFG) -> set:
                 term_productions.add(prod)
             case 2:
                 non_term_productions.add(prod)
-            
+
     result = []
     for (u, v, label) in graph.edges(data="label"):
         for prod in term_productions:
@@ -56,14 +85,43 @@ def hellings(graph: Graph, cfg: CFG) -> set:
             if y == v:
                 for prod in non_term_productions:
                     new_triple = (x, prod.head, u)
-                    if prod.body[0] == M and prod.body[1] == N and new_triple not in result:
+                    if (
+                        prod.body[0] == M
+                        and prod.body[1] == N
+                        and new_triple not in result
+                    ):
                         m.append(new_triple)
                         result.append(new_triple)
         for (x, M, y) in result:
             if x == u:
                 for prod in non_term_productions:
                     new_triple = (v, prod.head, y)
-                    if prod.body[0] == N and prod.body[1] == M and new_triple not in result:
+                    if (
+                        prod.body[0] == N
+                        and prod.body[1] == M
+                        and new_triple not in result
+                    ):
                         m.append(new_triple)
                         result.append(new_triple)
     return result
+
+
+def hellings(graphPath, cfgGile) -> list:
+    """Function based on the Hellings algorithm that solves the reachability problem between all pairs of nodes
+     for a given graph and a given context-free grammar.
+
+    Parameters
+    ----------
+    graphPath: The path to file that contains graph in .dot format
+    cfgGile: File that contains CFG
+
+    Returns
+    -------
+    result: List
+        A list of pairs of nodes solving the reachability problem between all pairs of nodes.
+    """
+
+    with open(cfgGile) as f:
+        cfg = CFG.from_text(f.read())
+
+    return hellings(nx_pydot.read_dot(graphPath), cfg)
