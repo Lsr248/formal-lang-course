@@ -21,6 +21,7 @@ def intersect_nfa(
 
     return nfa_by_bm(intersection)
 
+
 def bm_by_nfa(nfa: NondeterministicFiniteAutomaton) -> BinaryMatrix:
     """
     Builds binary matrix by NFA.
