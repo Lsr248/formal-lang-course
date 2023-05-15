@@ -4,6 +4,7 @@ from pyformlang.finite_automaton import NondeterministicFiniteAutomaton, Symbol
 
 from project.regular_queries import *
 
+
 def get_sample_fa():
     states = [State(0), State(1)]
     fa = NondeterministicFiniteAutomaton()
@@ -17,6 +18,7 @@ def get_sample_fa():
         ]
     )
     return fa
+
 
 def get_sampel_fa_other():
     states = [State(0), State(1), State(2), State(3)]
@@ -36,6 +38,7 @@ def get_sampel_fa_other():
     )
     return fa
 
+
 def test_intersect_with_empty():
     nfa = get_sample_fa()
     bm = bm_by_nfa(nfa)
@@ -44,6 +47,7 @@ def test_intersect_with_empty():
     intersection = nfa_by_bm(intersect(bm, empty_bm))
 
     assert intersection.is_empty()
+
 
 def test_intersect():
     l_nfa = get_sampel_fa_other()

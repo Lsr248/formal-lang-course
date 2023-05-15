@@ -5,7 +5,6 @@ from pyformlang.cfg import CFG, Variable
 from project.cnfUtils import cfg_to_cnf
 
 
-
 def reachability_problem(
     graph: Graph,
     query: CFG,
@@ -40,7 +39,7 @@ def hellings(graph: Graph, cfg: CFG) -> set:
                 term_productions.add(prod)
             case 2:
                 non_term_productions.add(prod)
-            
+
     result = []
     for (u, v, label) in graph.edges(data="label"):
         for prod in term_productions:
@@ -56,14 +55,22 @@ def hellings(graph: Graph, cfg: CFG) -> set:
             if y == v:
                 for prod in non_term_productions:
                     new_triple = (x, prod.head, u)
-                    if prod.body[0] == M and prod.body[1] == N and new_triple not in result:
+                    if (
+                        prod.body[0] == M
+                        and prod.body[1] == N
+                        and new_triple not in result
+                    ):
                         m.append(new_triple)
                         result.append(new_triple)
         for (x, M, y) in result:
             if x == u:
                 for prod in non_term_productions:
                     new_triple = (v, prod.head, y)
-                    if prod.body[0] == N and prod.body[1] == M and new_triple not in result:
+                    if (
+                        prod.body[0] == N
+                        and prod.body[1] == M
+                        and new_triple not in result
+                    ):
                         m.append(new_triple)
                         result.append(new_triple)
     return result

@@ -36,7 +36,6 @@ def test_minimize_rsm():
     ecfg = create_ecfg_from_text(text)
     rsm = rfa_from_ecfg(ecfg)
     assert all(
-        minimize(rsm).boxes[var]
-        == dfa_by_regex(ecfg.productions[var])
+        minimize(rsm).boxes[var] == dfa_by_regex(ecfg.productions[var])
         for var in ecfg.productions.keys()
     )

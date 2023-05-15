@@ -5,7 +5,6 @@ from pyformlang.regular_expression import Regex
 
 
 class ECFG:
-   
     def __init__(
         self,
         variables: AbstractSet[Variable],
@@ -36,9 +35,7 @@ def create_ecfg_from_cfg(cfg: CFG):
         productions[prod.head] = (
             productions[prod.head].union(regex) if prod.head in productions else regex
         )
-    return ECFG(
-        cfg.variables, productions, cfg.start_symbol
-    )
+    return ECFG(cfg.variables, productions, cfg.start_symbol)
 
 
 def create_ecfg_from_text(text: str):
@@ -64,7 +61,7 @@ def create_ecfg_from_text(text: str):
         head = Variable(head_symbol.strip())
         variables.add(head)
         productions[head] = Regex(body_symbol)
-    return ECFG(variables,  productions)
+    return ECFG(variables, productions)
 
 
 def create_ecfg_from_file(file):

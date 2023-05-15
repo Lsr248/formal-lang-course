@@ -4,9 +4,10 @@ from project.cnfUtils import cfg_from_file
 from project.ecfgUtils import *
 
 expected = ECFG(
-        variables={Variable("S"), Variable("A")},
-        productions={Variable("S"): Regex("A"), Variable("A"): Regex("(((S.S)|$)|b)")},
-    )
+    variables={Variable("S"), Variable("A")},
+    productions={Variable("S"): Regex("A"), Variable("A"): Regex("(((S.S)|$)|b)")},
+)
+
 
 def test_ecfg_from_cfg1():
     path = "tests/data/cfg.txt"
@@ -20,6 +21,7 @@ def test_ecfg_from_cfg1():
         )
         for var in expected.productions.keys()
     )
+
 
 def test_ecfg1_from_text():
     text = """
@@ -35,4 +37,3 @@ def test_ecfg1_from_text():
         )
         for var in expected.productions.keys()
     )
-

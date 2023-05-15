@@ -7,6 +7,7 @@ from scipy.sparse import dok_matrix
 from project.graphUtils import get_graph
 from project.cnfUtils import cfg_to_cnf
 
+
 def cfpq_matrix(
     graph: Union[MultiDiGraph, str],
     cfg: Union[CFG, str],

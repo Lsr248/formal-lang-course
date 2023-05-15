@@ -15,7 +15,6 @@ def test_regex_to_dfa():
     assert dfa.is_deterministic()
 
 
-
 def test_graph_to_nfa():
     graph = cd.labeled_two_cycles_graph(5, 5, labels=("A", "B"))
     actual_nfa = nfa_by_graph(graph, {0}, {3, 2})

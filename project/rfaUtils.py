@@ -11,7 +11,9 @@ class RFA:
     Class for representing Recursive finite automaton.
     """
 
-    def __init__(self, start: Variable, boxes: Dict[Variable, DeterministicFiniteAutomaton]):
+    def __init__(
+        self, start: Variable, boxes: Dict[Variable, DeterministicFiniteAutomaton]
+    ):
         self.start = start
         self.boxes = boxes
 
@@ -33,7 +35,7 @@ def rfa_from_ecfg(ecfg: ECFG):
     return RFA(start=ecfg.start, boxes=boxes)
 
 
-def minimize(rfa:RFA):
+def minimize(rfa: RFA):
     """Minimize the current Recursive finite automaton.
     Returns
     RFA: RFA
