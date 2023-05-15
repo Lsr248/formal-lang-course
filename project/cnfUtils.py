@@ -9,8 +9,7 @@ def cfg_from_file(path:str) -> CFG:
 
 def cfg_to_cnf(cfg:CFG)-> CFG :
     wcnf = (
-        cfg.remove_useless_symbols()
-        .eliminate_unit_productions()
+        cfg.eliminate_unit_productions()
         .remove_useless_symbols()
     )
 
