@@ -5,7 +5,6 @@ from collections import namedtuple
 
 GraphInfo = namedtuple("GraphInfo", "nodes_num edges_num labels")
 
-
 def get_graph(name):
     """
     Returns graph with a given name.
@@ -23,6 +22,7 @@ def get_graph_info(graph: MultiDiGraph):
     :param graph: graph to find
     :return: Namedtuple of number of nodes, number of edges, set of edges' labels.
     """
+
     return GraphInfo(
         graph.number_of_nodes(),
         graph.number_of_edges(),
@@ -81,7 +81,7 @@ def build_and_save_two_cycle_graph(first_cycle, second_cycle, labels, path):
     return graph
 
 
-def get_edges_by_label(graph: MultiDiGraph):
+def get_edges_by_label(graph: MultiDiGraph)-> set:
     """
     Returns a set of labeled edges.
     :param graph: Graph with labeled edges.
