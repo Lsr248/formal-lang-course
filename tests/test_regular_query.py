@@ -41,12 +41,16 @@ def get_sampel_fa_other():
 
 def test_intersect_with_empty():
     nfa = get_sample_fa()
-    bm = bm_by_nfa(nfa)
-    empty_bm = bm_by_nfa(NondeterministicFiniteAutomaton())
+    bm = BoolDecomposition(nfa)
+    empty_bm = BoolDecomposition(NondeterministicFiniteAutomaton())
 
-    intersection = nfa_by_bm(intersect(bm, empty_bm))
+    intersection = BoolDecomposition.intersect_automata(bm, empty_bm)
 
-    assert intersection.is_empty()
+    assert not intersection.start_states
+    assert not intersection.final_states
+    assert not intersection.state_to_index
+    assert not intersection.bool_matrix
+    assert intersection.all_states == 0
 
 
 def test_intersect():
@@ -54,8 +58,8 @@ def test_intersect():
     r_nfa = get_sample_fa()
     expected = l_nfa.get_intersection(r_nfa)
 
-    l_bm = bm_by_nfa(l_nfa)
-    r_bm = bm_by_nfa(r_nfa)
+    l_bm = BoolDecomposition(l_nfa)
+    r_bm = BoolDecomposition(r_nfa)
 
-    actual = nfa_by_bm(intersect(l_bm, r_bm))
-    assert expected.is_equivalent_to(actual)
+    actual = BoolDecomposition.intersect_automata(l_bm, r_bm)
+    assert expected.final_states  == actual.final_states

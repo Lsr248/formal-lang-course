@@ -1,6 +1,6 @@
 grammar GQL;
 
-
+PRINT: 'print' ;
 COMMA: ',' ;
 QUOTE: '"' ;
 LEFT_CURLY_BRACE: '{';
@@ -21,15 +21,14 @@ FILTER: 'filter';
 prog:	(stmt NEWLINE?)* EOF ;
 
 stmt:   var '=' expr LINE_END
-    |   'print' expr LINE_END
+    |   PRINT expr LINE_END
     ;
 
 lambda_expr: FUN LEFT_PARENTHESIS var RIGHT_PARENTHESIS LEFT_CURLY_BRACE expr RIGHT_CURLY_BRACE ;
 
 
-var:    initial_letter string ;
-initial_letter: IDENTIFIER_CHAR ;
-string: (initial_letter | '/' | '.' | INT)* ;
+var:    IDENTIFIER_CHAR string ;
+string: (IDENTIFIER_CHAR | '/' | '.' | INT)* ;
 
 
 expr:	LEFT_PARENTHESIS expr RIGHT_PARENTHESIS
